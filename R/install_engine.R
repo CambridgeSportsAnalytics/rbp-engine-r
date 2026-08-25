@@ -69,6 +69,10 @@ install_engine <- function(
 #' Default prefix used by [install_engine()].
 #'
 #' @return A directory path.
+#'
+#' @examples
+#' default_engine_home()
+#'
 #' @export
 default_engine_home <- function() {
   sysname <- Sys.info()[["sysname"]]
@@ -109,6 +113,10 @@ uninstall_engine <- function(dest = NULL) {
 #' Override with env `RBP_ENGINE_RELEASES_URL` (no trailing slash).
 #'
 #' @return Character scalar.
+#'
+#' @examples
+#' engine_releases_url()
+#'
 #' @export
 engine_releases_url <- function() {
   env <- Sys.getenv("RBP_ENGINE_RELEASES_URL", unset = "")
@@ -121,6 +129,10 @@ engine_releases_url <- function() {
 #' Platform id matching `manifest.json` artifacts (`macos-arm64`, …).
 #'
 #' @return Character scalar.
+#'
+#' @examples
+#' engine_runtime_id()
+#'
 #' @export
 engine_runtime_id <- function() {
   sys <- Sys.info()[["sysname"]]

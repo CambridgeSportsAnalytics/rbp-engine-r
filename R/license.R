@@ -38,6 +38,10 @@ ensure_license_env <- function() {
 #'
 #' @return A short character string such as `"RBP_LICENSE (environment)"`,
 #'   `"RBP_LICENSE_FILE=..."`, or a message indicating none is configured.
+#'
+#' @examples
+#' license_source()
+#'
 #' @export
 license_source <- function() {
   if (nzchar(Sys.getenv("RBP_LICENSE", unset = ""))) {

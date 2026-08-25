@@ -19,8 +19,12 @@
 #'   [engine_load()] return the loaded path (invisibly). [ensure_engine()]
 #'   returns `TRUE` invisibly when the engine is available.
 #'
-#' @seealso [library_path()], [abi_version()]
+#' @seealso [library_path()], [abi_version()], [install_engine()]
 #' @name engine
+#'
+#' @examples
+#' engine_available()
+#' length(engine_candidate_paths()) >= 1
 NULL
 
 .engine_lib_filename <- function() {

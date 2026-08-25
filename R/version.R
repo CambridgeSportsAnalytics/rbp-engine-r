@@ -9,6 +9,10 @@
 #'
 #' @seealso [engine_available()], [ensure_engine()], [license_source()]
 #' @name version-helpers
+#'
+#' @examples
+#' package_version_rbpengine()
+#' engine_path_loaded()
 NULL
 
 #' @rdname version-helpers

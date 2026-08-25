@@ -24,4 +24,5 @@ SystemRequirements: Optional RBP Math Engine runtime (shared library
     Not required to install or load this package; required for prediction.
 URL: https://github.com/CambridgeSportsAnalytics/rbp-engine-r
 BugReports: https://github.com/CambridgeSportsAnalytics/rbp-engine-r/issues
+Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.0

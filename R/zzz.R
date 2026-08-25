@@ -18,7 +18,7 @@
   } else {
     packageStartupMessage(
       "rbpengine ", utils::packageVersion("rbpengine"),
-      " (engine runtime not loaded — run rbpengine::install_engine(); ",
+      " (engine runtime not loaded; run rbpengine::install_engine(); ",
       "see ?install_engine)"
     )
   }

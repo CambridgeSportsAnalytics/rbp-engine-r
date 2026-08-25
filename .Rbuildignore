@@ -8,3 +8,5 @@
 ^lib$
 ^\.libs$
 ^LICENSE\.md$
+^README\.md$
+^cran-comments\.md$

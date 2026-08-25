@@ -1,6 +1,6 @@
 #' Locate and load the private RBP Math Engine runtime.
 #'
-#' The CRAN/open **rbpengine** package is a thin client. Predictions require the
+#' The open **rbpengine** package is a thin client. Predictions require the
 #' private **RBP Math Engine** shared library (`librbp_math_lib.dylib` /
 #' `.so` / `rbp_math_lib.dll`) plus platform companions (OpenBLAS/LAPACK where
 #' needed) and a valid license.

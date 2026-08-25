@@ -35,7 +35,7 @@ verified unless \code{manifest_url} is also reachable via \code{version}.}
 The install prefix, invisibly.
 }
 \description{
-The CRAN/open \strong{rbpengine} package is a thin client. Predictions need the
+The open \strong{rbpengine} package is a thin client. Predictions need the
 private engine (shared library + companions + \code{rbp-license-info}). This
 helper fetches the platform tarball from
 \verb{https://docs.csanalytics.io/releases/} (or unpacks a local archive) into a

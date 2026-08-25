@@ -20,7 +20,7 @@ returns character paths that may be probed. \code{\link[=find_engine_path]{find_
 returns \code{TRUE} invisibly when the engine is available.
 }
 \description{
-The CRAN/open \strong{rbpengine} package is a thin client. Predictions require the
+The open \strong{rbpengine} package is a thin client. Predictions require the
 private \strong{RBP Math Engine} shared library (\code{librbp_math_lib.dylib} /
 \code{.so} / \code{rbp_math_lib.dll}) plus platform companions (OpenBLAS/LAPACK where
 needed) and a valid license.

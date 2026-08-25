@@ -11,6 +11,8 @@ Open R client for the RBP Math Engine C ABI. Provides predict_rbp, predict_maxfi
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://cambridgesportsanalytics.r-universe.dev}
+  \item \url{https://docs.csanalytics.io/Install/R}
   \item \url{https://github.com/CambridgeSportsAnalytics/rbp-engine-r}
   \item Report bugs at \url{https://github.com/CambridgeSportsAnalytics/rbp-engine-r/issues}
 }

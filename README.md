@@ -14,18 +14,19 @@ mistaken for the engine itself.
 
 ## Install
 
-```r
-# After this package is on R-universe / CRAN:
-# install.packages("rbpengine")
+Docs: [Install / R](https://docs.csanalytics.io/Install/R)
 
-# From this repository:
-# install.packages("jsonlite")  # Imports
-install.packages(".", repos = NULL, type = "source")  # clone root = package root
+```r
+install.packages(c("jsonlite", "remotes"))
+remotes::install_github("CambridgeSportsAnalytics/rbp-engine-r")
 
 library(rbpengine)
 install_engine()       # fetches https://docs.csanalytics.io/releases/latest/
 engine_available()     # TRUE
 ```
+
+When the package is on R-universe or CRAN, that first line becomes
+`install.packages("rbpengine")`.
 
 The MIT license on this tree covers **this R client only**. The native library
 (`librbp_math_lib`), companions, and `rbp-license-info` are **not** in this

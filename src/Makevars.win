@@ -1,0 +1,5 @@
+# Windows: LoadLibrary at runtime; no link against rbp_math_lib.dll at build.
+# Header: vendored rbp_math.h in this directory.
+
+PKG_CPPFLAGS = -I.
+PKG_LIBS =

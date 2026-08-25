@@ -1,0 +1,7 @@
+# Open R package glue only - does NOT link librbp_math_lib.
+# The private engine is dlopen()'d at runtime (see engine_load.c / R/native.R).
+# Header: vendored rbp_math.h in this directory (synced from ffi/include/).
+
+PKG_CPPFLAGS = -I.
+# Linux needs -ldl for dlopen; harmless on macOS.
+PKG_LIBS = -ldl

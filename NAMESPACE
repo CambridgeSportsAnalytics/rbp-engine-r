@@ -1,0 +1,36 @@
+useDynLib(rbpengine, .registration = TRUE, .fixes = "C_")
+
+export(
+  predict_rbp,
+  predict_maxfit,
+  predict_grid,
+  PredictOptions,
+  MaxFitOptions,
+  GridOptions,
+  relevance,
+  similarity,
+  info_x,
+  info_theta,
+  relevance_metrics,
+  set_percentile_value_algorithm,
+  get_percentile_value_algorithm,
+  license_source,
+  ensure_license_env,
+  library_path,
+  abi_version,
+  package_version_rbpengine,
+  engine_available,
+  engine_candidate_paths,
+  engine_load,
+  find_engine_path,
+  ensure_engine,
+  engine_path_loaded,
+  install_engine,
+  uninstall_engine,
+  default_engine_home,
+  engine_releases_url,
+  engine_runtime_id,
+  license_info
+)
+
+S3method(print, PredictionResults)

@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Cel Kulasekaran \email{prediction@csanalytics.io}
+\strong{Maintainer}: Cel Kulasekaran \email{ckulasekaran@users.noreply.github.com}
 
 Authors:
 \itemize{

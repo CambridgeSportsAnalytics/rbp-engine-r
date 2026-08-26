@@ -19,7 +19,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Cel Kulasekaran \email{ckulasekaran@users.noreply.github.com}
+\strong{Maintainer}: Cel Kulasekaran \email{ckulasekaran@csanalytics.io}
 
 Authors:
 \itemize{

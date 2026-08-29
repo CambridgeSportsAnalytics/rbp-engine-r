@@ -111,7 +111,7 @@ MaxFitOptions <- function(
 #' @param retain_grid_objects Character policy string (overrides `retain_all`).
 #' @param attribute_combi Optional matrix of attribute combinations.
 #' @param adjust_impact_for_missing Logical; incomplete-column IOF/IOP vs a
-#'   0/1 include-k null (default `TRUE`). `FALSE` is the pre-adjustment /
+#'   μ+σZ include-k null (default `TRUE`). `FALSE` is the pre-adjustment /
 #'   PSR-parity baseline.
 #' @param inner_parallel `"auto"` or `"off"` (within-call parallelism).
 #' @return A named list with class `GridOptions`.

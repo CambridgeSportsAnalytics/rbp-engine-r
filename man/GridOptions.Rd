@@ -56,7 +56,7 @@ GridOptions(
 \item{attribute_combi}{Optional matrix of attribute combinations.}
 
 \item{adjust_impact_for_missing}{Logical; incomplete-column IOF/IOP vs a
-0/1 include-k null (default \code{TRUE}). \code{FALSE} is the pre-adjustment /
+μ+σZ include-k null (default \code{TRUE}). \code{FALSE} is the pre-adjustment /
 PSR-parity baseline.}
 
 \item{inner_parallel}{\code{"auto"} or \code{"off"} (within-call parallelism).}

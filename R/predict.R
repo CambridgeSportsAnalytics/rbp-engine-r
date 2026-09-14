@@ -11,17 +11,18 @@
 #'   `result$yhat`, `result$insights$relevance`.
 #'
 #' @examples
-#' \dontrun{
-#' set.seed(1)
-#' N <- 40; K <- 3
-#' X <- matrix(rnorm(N * K), N, K)
-#' y <- rnorm(N)
-#' theta <- colMeans(X)
-#' res <- predict_rbp(y, X, theta, PredictOptions(threshold = 0.5))
-#' res$yhat
-#' best <- predict_maxfit(y, X, theta)
-#' out <- predict_grid(y, X, theta, GridOptions(k = 1L, max_iter = 50L))
-#' as.numeric(out$yhat[1])
+#' PredictOptions(threshold = 0.5)
+#' if (engine_available()) {
+#'   set.seed(1)
+#'   N <- 40; K <- 3
+#'   X <- matrix(rnorm(N * K), N, K)
+#'   y <- rnorm(N)
+#'   theta <- colMeans(X)
+#'   res <- predict_rbp(y, X, theta, PredictOptions(threshold = 0.5))
+#'   res$yhat
+#'   best <- predict_maxfit(y, X, theta)
+#'   out <- predict_grid(y, X, theta, GridOptions(k = 1L, max_iter = 50L))
+#'   as.numeric(out$yhat[1])
 #' }
 #'
 #' @export

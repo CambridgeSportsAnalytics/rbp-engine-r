@@ -6,11 +6,15 @@
 #' `https://docs.csanalytics.io/releases/` (or unpacks a local archive) into a
 #' well-known prefix that [engine_candidate_paths()] already searches.
 #'
-#' This is a **user-called** step, never run at package install time (CRAN
-#' policy). Analogous to `pip install rbp-engine` for the engine files only.
+#' This is a **user-called** step, never run at package install time and never
+#' invoked from examples, tests, or vignettes (CRAN policy). Analogous to
+#' `pip install rbp-engine` for the engine files only. Typical calls are
+#' `install_engine()` for the latest runtime for this machine,
+#' `install_engine(version = "1.3.4")` to pin a release, or
+#' `install_engine(path = "macos-arm64.tar.gz")` for a local archive.
 #'
 #' @param version Release to fetch. `"latest"` (default) or a semver such as
-#'   `"1.3.0"`. Ignored when `path` or `url` is set.
+#'   `"1.3.4"`. Ignored when `path` or `url` is set.
 #' @param dest Install prefix. Default is [default_engine_home()]
 #'   (`~/.local/share/rbp-engine` on Unix, `%LOCALAPPDATA%/rbp-engine` on
 #'   Windows).
@@ -22,13 +26,6 @@
 #' @param quiet Suppress download progress.
 #'
 #' @return The install prefix, invisibly.
-#'
-#' @examples
-#' \dontrun{
-#' install_engine()                 # latest for this machine
-#' install_engine(version = "1.3.0")
-#' install_engine(path = "macos-arm64.tar.gz")
-#' }
 #'
 #' @seealso [ensure_engine()], [engine_available()], [uninstall_engine()]
 #' @export

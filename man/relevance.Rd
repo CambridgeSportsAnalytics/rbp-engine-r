@@ -34,14 +34,14 @@ These call the loaded RBP Math Engine directly. Use \code{\link[=ensure_engine]{
 \code{\link[=engine_available]{engine_available()}} if you need to check the runtime first.
 }
 \examples{
-\dontrun{
 X <- matrix(rnorm(20 * 3), 20, 3)
 theta <- colMeans(X)
-relevance(X, theta)
-similarity(X, theta)
-info_x(X)
-info_theta(X, theta)
-relevance_metrics(X, theta)
+if (engine_available()) {
+  relevance(X, theta)
+  similarity(X, theta)
+  info_x(X)
+  info_theta(X, theta)
+  relevance_metrics(X, theta)
 }
 
 }

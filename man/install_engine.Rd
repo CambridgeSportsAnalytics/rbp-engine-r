@@ -15,7 +15,7 @@ install_engine(
 }
 \arguments{
 \item{version}{Release to fetch. \code{"latest"} (default) or a semver such as
-\code{"1.3.0"}. Ignored when \code{path} or \code{url} is set.}
+\code{"1.3.4"}. Ignored when \code{path} or \code{url} is set.}
 
 \item{dest}{Install prefix. Default is \code{\link[=default_engine_home]{default_engine_home()}}
 (\verb{~/.local/share/rbp-engine} on Unix, \verb{\%LOCALAPPDATA\%/rbp-engine} on
@@ -42,16 +42,12 @@ helper fetches the platform tarball from
 well-known prefix that \code{\link[=engine_candidate_paths]{engine_candidate_paths()}} already searches.
 }
 \details{
-This is a \strong{user-called} step, never run at package install time (CRAN
-policy). Analogous to \verb{pip install rbp-engine} for the engine files only.
-}
-\examples{
-\dontrun{
-install_engine()                 # latest for this machine
-install_engine(version = "1.3.0")
-install_engine(path = "macos-arm64.tar.gz")
-}
-
+This is a \strong{user-called} step, never run at package install time and never
+invoked from examples, tests, or vignettes (CRAN policy). Analogous to
+\verb{pip install rbp-engine} for the engine files only. Typical calls are
+\code{install_engine()} for the latest runtime for this machine,
+\code{install_engine(version = "1.3.4")} to pin a release, or
+\code{install_engine(path = "macos-arm64.tar.gz")} for a local archive.
 }
 \seealso{
 \code{\link[=ensure_engine]{ensure_engine()}}, \code{\link[=engine_available]{engine_available()}}, \code{\link[=uninstall_engine]{uninstall_engine()}}

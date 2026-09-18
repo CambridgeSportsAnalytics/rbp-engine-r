@@ -14,8 +14,9 @@ install_engine(
 )
 }
 \arguments{
-\item{version}{Release to fetch. \code{"latest"} (default) or a semver such as
-\code{"1.3.4"}. Ignored when \code{path} or \code{url} is set.}
+\item{version}{Math runtime to fetch (\code{docs.csanalytics.io/releases}).
+\code{"latest"} (default) or a math-lib semver such as \code{"1.3.4"}
+(not the PyPI \code{rbp-engine} 2.x version). Ignored when \code{path} or \code{url} is set.}
 
 \item{dest}{Install prefix. Default is \code{\link[=default_engine_home]{default_engine_home()}}
 (\verb{~/.local/share/rbp-engine} on Unix, \verb{\%LOCALAPPDATA\%/rbp-engine} on
@@ -45,8 +46,8 @@ well-known prefix that \code{\link[=engine_candidate_paths]{engine_candidate_pat
 This is a \strong{user-called} step, never run at package install time and never
 invoked from examples, tests, or vignettes (CRAN policy). Analogous to
 \verb{pip install rbp-engine} for the engine files only. Typical calls are
-\code{install_engine()} for the latest runtime for this machine,
-\code{install_engine(version = "1.3.4")} to pin a release, or
+\code{install_engine()} for the latest math runtime for this machine,
+\code{install_engine(version = "1.3.4")} to pin an rbp-math-lib tarball (not PyPI 2.x), or
 \code{install_engine(path = "macos-arm64.tar.gz")} for a local archive.
 }
 \seealso{

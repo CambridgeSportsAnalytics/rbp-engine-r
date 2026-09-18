@@ -1,12 +1,13 @@
 # rbpengine (R)
 
 Open R thin client for the [RBP Math Engine](https://www.csanalytics.io) C ABI.
-This repository is a **public mirror** of `r/` in the private math library.
+This repository is a **public mirror** of `r/` in the private [rbp-engine](https://github.com/CambridgeSportsAnalytics/rbp-engine) clients repo.
 It builds and installs **without** the engine. Predictions need the separately
 installed runtime and a CSA license.
 
 **Python users:** this is not the Python package. Use
-`pip install rbp-engine` ([PyPI](https://pypi.org/project/rbp-engine/)).
+`pip install rbp-engine` ([PyPI](https://pypi.org/project/rbp-engine/))
+(interface **2.x**; bundled math is rbp-math-lib **1.3.4**).
 
 The R **package** name is `rbpengine` (CRAN forbids hyphens). This GitHub repo
 is `rbp-engine-r` so it sits next to `rbp-engine` / `rbp-math-c-abi` and is not

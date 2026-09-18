@@ -11,8 +11,8 @@
 #' 3. [install_engine()] prefix ([default_engine_home()])
 #' 4. Well-known install prefixes (`/Library/rbp-engine/lib`,
 #'    `$HOME/.local/share/rbp-engine/lib`, ...)
-#' 5. Developer cargo tree next to this package (`../target/release` or
-#'    `../target/debug`)
+#' 5. Developer cargo tree (`RBP_MATH_LIB_ROOT`, sibling `rbp-math-lib/target`,
+#'    or `../target` when this package still sits next to a cargo workspace)
 #'
 #' @return [engine_available()] returns a logical. [engine_candidate_paths()]
 #'   returns character paths that may be probed. [find_engine_path()] and
@@ -81,13 +81,17 @@ engine_candidate_paths <- function() {
     }
   }
 
-  # Monorepo develop: r/ is next to target/
+  # Developer cargo: sibling rbp-math-lib, RBP_MATH_LIB_ROOT, or cwd relatives
   pkg_dir <- tryCatch(system.file(package = "rbpengine"), error = function(e) "")
-  # When installed from source in-repo, library path differs; also probe relative to cwd
+  math_root <- Sys.getenv("RBP_MATH_LIB_ROOT", unset = "")
   roots <- unique(c(
+    if (nzchar(math_root)) math_root else character(),
+    file.path("..", "rbp-math-lib"),
+    file.path("..", "..", "rbp-math-lib"),
     file.path(".."),
     file.path("../.."),
-    if (nzchar(pkg_dir)) file.path(pkg_dir, "..", "..") else character()
+    if (nzchar(pkg_dir)) file.path(pkg_dir, "..", "..") else character(),
+    if (nzchar(pkg_dir)) file.path(pkg_dir, "..", "..", "rbp-math-lib") else character()
   ))
   for (root in roots) {
     paths <- c(

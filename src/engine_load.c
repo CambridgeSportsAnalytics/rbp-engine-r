@@ -84,11 +84,23 @@ int rbp_engine_load(const char *path, char *err_buf, int err_len) {
     }
 
 #ifdef _WIN32
-    void *h = (void *)LoadLibraryA(path);
-    if (!h) {
-        set_err(err_buf, err_len, "LoadLibrary failed for RBP engine");
+    /* Companion DLLs (OpenBLAS, LAPACK) sit next to the engine. Plain
+     * LoadLibrary does not search that directory. */
+    HMODULE hmod = LoadLibraryExA(
+        path,
+        NULL,
+        LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+    if (!hmod) {
+        char msg[160];
+        snprintf(
+            msg,
+            sizeof(msg),
+            "LoadLibrary failed for RBP engine (Win32 error %lu)",
+            (unsigned long)GetLastError());
+        set_err(err_buf, err_len, msg);
         return -1;
     }
+    void *h = (void *)hmod;
 #else
     void *h = dlopen(path, RTLD_NOW | RTLD_GLOBAL);
     if (!h) {

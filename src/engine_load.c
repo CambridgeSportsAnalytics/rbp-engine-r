@@ -85,9 +85,18 @@ int rbp_engine_load(const char *path, char *err_buf, int err_len) {
 
 #ifdef _WIN32
     /* Companion DLLs (OpenBLAS, LAPACK) sit next to the engine. Plain
-     * LoadLibrary does not search that directory. */
+     * LoadLibrary does not search that directory. LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
+     * only splits the directory on '\', so R paths that contain '/' miss lib/. */
+    char win_path[4096];
+    strncpy(win_path, path, sizeof(win_path) - 1);
+    win_path[sizeof(win_path) - 1] = '\0';
+    for (char *c = win_path; *c; ++c) {
+        if (*c == '/') {
+            *c = '\\';
+        }
+    }
     HMODULE hmod = LoadLibraryExA(
-        path,
+        win_path,
         NULL,
         LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
     if (!hmod) {

@@ -343,5 +343,8 @@ engine_runtime_id <- function() {
 
 .first_hex <- function(out) {
   line <- out[[1]]
+  # GNU sha256sum (Rtools) escapes the line when the path contains '\':
+  # a leading '\' is printed before the digest.
+  line <- sub("^\\\\", "", line)
   sub("\\s.*$", "", line)
 }

@@ -1,3 +1,9 @@
+test_that("sha256 line parser drops a GNU escape prefix", {
+  hex <- "4eb0de9dcb7c638f10fe17222604b51e0811c4824b880bc64067a1d0d7a8fc23"
+  expect_equal(rbpengine:::.first_hex(paste0("\\", hex, " *D:\\\\Temp\\\\file.tar.gz")), hex)
+  expect_equal(rbpengine:::.first_hex(paste0(hex, "  file.tar.gz")), hex)
+})
+
 test_that("runtime id and default home are well-formed", {
   id <- engine_runtime_id()
   expect_type(id, "character")

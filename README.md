@@ -7,7 +7,7 @@ installed runtime and a CSA license.
 
 **Python users:** this is not the Python package. Use
 `pip install rbp-engine` ([PyPI](https://pypi.org/project/rbp-engine/))
-(interface **2.x**; bundled math is rbp-math-lib **1.3.4**).
+(interface **2.0.1**; bundled math is rbp-math-lib **1.3.5**).
 
 The R **package** name is `rbpengine` (CRAN forbids hyphens). This GitHub repo
 is `rbp-engine-r` so it sits next to `rbp-engine` / `rbp-math-c-abi` and is not

@@ -7,5 +7,5 @@
 | R package name | `rbpengine` |
 | Package version | 2.2.0 |
 | Private commit | `225b24f25e5484872fe09781455bfff5bf795762` |
-| Synced at (UTC) | 2026-09-29T03:48Z |
+| Synced at (UTC) | 2026-09-29T03:54Z |
 | RBP_ABI_VERSION (vendored header) | 5 |

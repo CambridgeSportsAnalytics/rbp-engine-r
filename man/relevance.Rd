@@ -6,7 +6,7 @@
 \alias{info_x}
 \alias{info_theta}
 \alias{relevance_metrics}
-\title{Standalone insight scores (no full predict required).}
+\title{Standalone insight scores (no prediction call required).}
 \usage{
 relevance(X, theta)
 

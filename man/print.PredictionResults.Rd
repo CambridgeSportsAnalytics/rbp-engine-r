@@ -7,8 +7,8 @@
 \method{print}{PredictionResults}(x, ...)
 }
 \arguments{
-\item{x}{A \code{PredictionResults} object from \link{predict_rbp}, \link{predict_maxfit},
-or \link{predict_grid}.}
+\item{x}{A \code{PredictionResults} object from \link{predict_grid}, \link{predict_maxfit},
+or \link{predict_psr}.}
 
 \item{...}{Unused.}
 }

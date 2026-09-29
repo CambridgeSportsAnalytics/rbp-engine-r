@@ -6,7 +6,7 @@ Authors@R: c(
     person("Cel", "Kulasekaran", role = c("cre"),
            email = "ckulasekaran@csanalytics.io")
     )
-Description: Provides predict_rbp(), predict_maxfit(), and predict_grid() for
+Description: Provides predict_psr(), predict_maxfit(), and predict_grid() for
     relevance-based prediction ('RBP') via the 'RBP Math Engine' C application
     binary interface ('ABI'). Returns a 'PredictionResults' nested list that
     mirrors the 'Python' 'rbp_engine' package. The package builds and installs

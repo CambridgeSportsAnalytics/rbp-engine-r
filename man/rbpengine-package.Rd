@@ -6,7 +6,7 @@
 \alias{rbpengine-package}
 \title{rbpengine: Relevance-Based Prediction for the 'RBP Math Engine'}
 \description{
-Provides predict_rbp(), predict_maxfit(), and predict_grid() for relevance-based prediction ('RBP') via the 'RBP Math Engine' C application binary interface ('ABI'). Returns a 'PredictionResults' nested list that mirrors the 'Python' 'rbp_engine' package. The package builds and installs without the private engine; prediction and insight entry points load the engine at runtime ('RBP_ENGINE_LIB' or a staged install under 'RBP_ENGINE_HOME' / /Library/rbp-engine). Licensing uses 'rbp-license-info' and standard license environment variables.
+Provides predict_psr(), predict_maxfit(), and predict_grid() for relevance-based prediction ('RBP') via the 'RBP Math Engine' C application binary interface ('ABI'). Returns a 'PredictionResults' nested list that mirrors the 'Python' 'rbp_engine' package. The package builds and installs without the private engine; prediction and insight entry points load the engine at runtime ('RBP_ENGINE_LIB' or a staged install under 'RBP_ENGINE_HOME' / /Library/rbp-engine). Licensing uses 'rbp-license-info' and standard license environment variables.
 }
 \seealso{
 Useful links:

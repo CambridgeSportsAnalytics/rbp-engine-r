@@ -1,4 +1,4 @@
-#' Standalone insight scores (no full predict required).
+#' Standalone insight scores (no prediction call required).
 #'
 #' These call the loaded RBP Math Engine directly. Use [ensure_engine()] /
 #' [engine_available()] if you need to check the runtime first.

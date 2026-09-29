@@ -33,8 +33,8 @@ Discovery order (first path that loads and exposes the expected ABI symbols):
 \item \code{\link[=install_engine]{install_engine()}} prefix (\code{\link[=default_engine_home]{default_engine_home()}})
 \item Well-known install prefixes (\verb{/Library/rbp-engine/lib},
 \verb{$HOME/.local/share/rbp-engine/lib}, ...)
-\item Developer cargo tree (\code{RBP_MATH_LIB_ROOT}, sibling
-  \code{rbp-math-lib/target}, or \code{../target})
+\item Developer cargo tree (\code{RBP_MATH_LIB_ROOT}, sibling \code{rbp-math-lib/target},
+or \code{../target} when this package still sits next to a cargo workspace)
 }
 }
 \examples{

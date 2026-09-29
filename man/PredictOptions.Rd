@@ -65,7 +65,7 @@ A named list with class \code{PredictOptions} or \code{MaxFitOptions}.
 }
 \description{
 Mirrors Python \code{PredictOptions}, \code{MaxFitOptions}, and \code{GridOptions}.
-Pass the list to \link{predict_rbp}, \link{predict_maxfit}, or \link{predict_grid}.
+Pass the list to \link{predict_psr}, \link{predict_maxfit}, or \link{predict_grid}.
 Fields set to \code{NULL} are omitted so the engine applies its defaults.
 }
 \examples{
@@ -74,5 +74,5 @@ MaxFitOptions(objective = "kfit")
 
 }
 \seealso{
-\link{GridOptions}, \link{predict_rbp}, \link{predict_maxfit}
+\link{GridOptions}, \link{predict_psr}, \link{predict_maxfit}
 }

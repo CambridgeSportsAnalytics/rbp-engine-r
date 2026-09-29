@@ -38,7 +38,7 @@ test_that("abi version readable when engine runtime is available", {
   expect_gte(v, 1L)
 })
 
-test_that("predict_rbp returns PredictionResults core fields", {
+test_that("predict_psr returns PredictionResults core fields", {
   skip_if_not(engine_available(), "native engine runtime not available")
 
   set.seed(42)
@@ -48,7 +48,7 @@ test_that("predict_rbp returns PredictionResults core fields", {
   y <- rnorm(N)
   theta <- colMeans(X)
 
-  res <- predict_rbp(y, X, theta, PredictOptions(threshold = 0.5))
+  res <- predict_psr(y, X, theta, PredictOptions(threshold = 0.5))
   expect_s3_class(res, "PredictionResults")
   expect_equal(res$n_observations, N)
   expect_equal(res$n_variables, K)

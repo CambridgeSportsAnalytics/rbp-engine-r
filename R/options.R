@@ -1,7 +1,7 @@
 #' Configuration objects (named lists) for predict / maxfit / grid.
 #'
 #' Mirrors Python `PredictOptions`, `MaxFitOptions`, and `GridOptions`.
-#' Pass the list to [predict_rbp], [predict_maxfit], or [predict_grid].
+#' Pass the list to [predict_psr], [predict_maxfit], or [predict_grid].
 #' Fields set to `NULL` are omitted so the engine applies its defaults.
 #'
 #' @param threshold Numeric vector of thresholds, or `NULL` for engine default.
@@ -17,7 +17,7 @@
 #' @param verbose Logical; when `TRUE`, the engine may print library status
 #'   diagnostics (default `FALSE`).
 #' @return A named list with class `PredictOptions` or `MaxFitOptions`.
-#' @seealso [GridOptions], [predict_rbp], [predict_maxfit]
+#' @seealso [GridOptions], [predict_psr], [predict_maxfit]
 #'
 #' @examples
 #' PredictOptions(threshold = 0.5)

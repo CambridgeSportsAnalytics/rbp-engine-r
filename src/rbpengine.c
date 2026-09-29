@@ -1024,6 +1024,11 @@ SEXP rbpengine_engine_load(SEXP path) {
     return mkString(p);
 }
 
+SEXP rbpengine_engine_unload(void) {
+    rbp_engine_unload();
+    return ScalarLogical(1);
+}
+
 SEXP rbpengine_engine_loaded(void) {
     return ScalarLogical(rbp_engine_is_loaded() != 0);
 }

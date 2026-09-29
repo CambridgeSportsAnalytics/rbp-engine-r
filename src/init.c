@@ -12,6 +12,7 @@ extern SEXP rbpengine_run(SEXP kind, SEXP y, SEXP X, SEXP theta, SEXP options);
 extern SEXP rbpengine_insight(SEXP which, SEXP X, SEXP theta);
 extern SEXP rbpengine_library_ok(void);
 extern SEXP rbpengine_engine_load(SEXP path);
+extern SEXP rbpengine_engine_unload(void);
 extern SEXP rbpengine_engine_loaded(void);
 extern SEXP rbpengine_engine_path(void);
 
@@ -24,6 +25,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"rbpengine_insight", (DL_FUNC)&rbpengine_insight, 3},
     {"rbpengine_library_ok", (DL_FUNC)&rbpengine_library_ok, 0},
     {"rbpengine_engine_load", (DL_FUNC)&rbpengine_engine_load, 1},
+    {"rbpengine_engine_unload", (DL_FUNC)&rbpengine_engine_unload, 0},
     {"rbpengine_engine_loaded", (DL_FUNC)&rbpengine_engine_loaded, 0},
     {"rbpengine_engine_path", (DL_FUNC)&rbpengine_engine_path, 0},
     {NULL, NULL, 0}

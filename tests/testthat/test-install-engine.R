@@ -64,6 +64,82 @@ test_that("install_engine unpacks a local tarball and uninstalls", {
   expect_false(dir.exists(dest))
 })
 
+test_that("install_engine replaces an existing runtime without overwriting in place", {
+  dest <- tempfile("rbp-engine-home-")
+  staged <- tempfile("rbp-staged-")
+  tar <- tempfile(fileext = ".tar.gz")
+  on.exit(
+    {
+      unlink(dest, recursive = TRUE, force = TRUE)
+      unlink(staged, recursive = TRUE, force = TRUE)
+      unlink(tar)
+    },
+    add = TRUE
+  )
+
+  libname <- if (identical(Sys.info()[["sysname"]], "Darwin")) {
+    "librbp_math_lib.dylib"
+  } else if (identical(Sys.info()[["sysname"]], "Windows")) {
+    "rbp_math_lib.dll"
+  } else {
+    "librbp_math_lib.so"
+  }
+
+  write_tree <- function(payload) {
+    unlink(staged, recursive = TRUE, force = TRUE)
+    dir.create(file.path(staged, "lib"), recursive = TRUE)
+    dir.create(file.path(staged, "bin"), recursive = TRUE)
+    writeBin(charToRaw(payload), file.path(staged, "lib", libname))
+    writeLines("#!/bin/sh\necho stub\n", file.path(staged, "bin", "rbp-license-info"))
+  }
+  pack <- function() {
+    old <- setwd(staged)
+    on.exit(setwd(old), add = TRUE)
+    utils::tar(
+      tarfile = tar,
+      files = c("lib", "bin"),
+      compression = "gzip",
+      tar = "internal"
+    )
+  }
+
+  write_tree("old-runtime")
+  pack()
+  install_engine(path = tar, dest = dest, load = FALSE)
+  writeLines("stale", file.path(dest, "lib", "stale-companion.so"))
+  writeLines("aside", file.path(dest, "lib", paste0(libname, ".old-9-1")))
+
+  write_tree("new-runtime")
+  pack()
+  install_engine(path = tar, dest = dest, load = FALSE)
+
+  got <- rawToChar(readBin(file.path(dest, "lib", libname), what = "raw", n = 100L))
+  expect_equal(got, "new-runtime")
+  expect_false(file.exists(file.path(dest, "lib", "stale-companion.so")))
+  expect_false(file.exists(file.path(dest, "lib", paste0(libname, ".old-9-1"))))
+})
+
+test_that("a path that cannot be deleted is renamed aside", {
+  dest <- tempfile("rbp-locked-")
+  dir.create(dest)
+  on.exit(unlink(dest, recursive = TRUE, force = TRUE), add = TRUE)
+  locked <- file.path(dest, "librbp_math_lib.dylib")
+  writeLines("mapped", locked)
+
+  orig <- get(".unlink_path", envir = asNamespace("rbpengine"))
+  assignInNamespace(".unlink_path", function(path, recursive) 1L, ns = "rbpengine")
+  on.exit(
+    assignInNamespace(".unlink_path", orig, ns = "rbpengine"),
+    add = TRUE
+  )
+
+  rbpengine:::.displace_path(locked)
+  expect_false(file.exists(locked))
+  aside <- list.files(dest, pattern = "\\.old-[0-9]")
+  expect_length(aside, 1L)
+  expect_equal(readLines(file.path(dest, aside)), "mapped")
+})
+
 test_that("uninstall_engine refuses a directory that is not a runtime", {
   dest <- tempfile("not-runtime-")
   dir.create(dest)

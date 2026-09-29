@@ -16,8 +16,9 @@ find_engine_path()
 \value{
 \code{\link[=engine_available]{engine_available()}} returns a logical. \code{\link[=engine_candidate_paths]{engine_candidate_paths()}}
 returns character paths that may be probed. \code{\link[=find_engine_path]{find_engine_path()}} and
-\code{\link[=engine_load]{engine_load()}} return the loaded path (invisibly). \code{\link[=ensure_engine]{ensure_engine()}}
-returns \code{TRUE} invisibly when the engine is available.
+\code{\link[=engine_load]{engine_load()}} return the loaded path (invisibly). \code{\link[=engine_unload]{engine_unload()}}
+returns \code{TRUE} invisibly after releasing the loaded library.
+\code{\link[=ensure_engine]{ensure_engine()}} returns \code{TRUE} invisibly when the engine is available.
 }
 \description{
 The open \strong{rbpengine} package is a thin client. Predictions require the

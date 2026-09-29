@@ -13,6 +13,10 @@
 #' `install_engine(version = "1.3.6")` to pin an rbp-math-lib tarball
 #' (not the PyPI `rbp-engine` 2.x version), or
 #' `install_engine(path = "macos-arm64.tar.gz")` for a local archive.
+#' Calling it again upgrades in place. A library this session already loaded
+#' from `dest` is unloaded first. A file another process still has mapped is
+#' renamed aside and the new file is written under the original name, because
+#' a loaded shared library cannot be overwritten in place.
 #'
 #' @param version Math runtime to fetch (`docs.csanalytics.io/releases`).
 #'   `"latest"` (default) or a math-lib semver such as `"1.3.6"`.
@@ -204,12 +208,16 @@ engine_runtime_id <- function() {
     lib <- file.path(path, "lib", .engine_lib_filename())
     if (!file.exists(lib) && file.exists(file.path(path, .engine_lib_filename()))) {
       # Bare native dir (engine sitting at prefix root).
+      .release_loaded_engine(dest)
       dir.create(file.path(dest, "lib"), recursive = TRUE, showWarnings = FALSE)
-      file.copy(file.path(path, .engine_lib_filename()), file.path(dest, "lib"), overwrite = TRUE)
+      .replace_file(
+        file.path(path, .engine_lib_filename()),
+        file.path(dest, "lib", .engine_lib_filename())
+      )
       extras <- list.files(path, pattern = "\\.(so|dll|dylib)(\\.[0-9]+)*$", full.names = TRUE)
       extras <- extras[!grepl(paste0(.engine_lib_filename(), "$"), basename(extras))]
-      if (length(extras)) {
-        file.copy(extras, file.path(dest, "lib"), overwrite = TRUE)
+      for (extra in extras) {
+        .replace_file(extra, file.path(dest, "lib", basename(extra)))
       }
       cli <- file.path(path, "rbp-license-info")
       if (!file.exists(cli)) {
@@ -217,14 +225,14 @@ engine_runtime_id <- function() {
       }
       if (file.exists(cli)) {
         dir.create(file.path(dest, "bin"), recursive = TRUE, showWarnings = FALSE)
-        file.copy(cli, file.path(dest, "bin"), overwrite = TRUE)
+        .replace_file(cli, file.path(dest, "bin", basename(cli)))
       }
       return(invisible(dest))
     }
     if (!file.exists(lib)) {
       stop("Not a staged runtime (missing ", lib, ")", call. = FALSE)
     }
-    .copy_tree(path, dest)
+    .stage_runtime(path, dest)
     return(invisible(dest))
   }
   .unpack_runtime_tar(path, dest)
@@ -248,7 +256,7 @@ engine_runtime_id <- function() {
       call. = FALSE
     )
   }
-  .copy_tree(root, dest)
+  .stage_runtime(root, dest)
   cli <- file.path(dest, "bin", "rbp-license-info")
   if (!file.exists(cli)) {
     cli <- file.path(dest, "bin", "rbp-license-info.exe")
@@ -259,20 +267,151 @@ engine_runtime_id <- function() {
   invisible(dest)
 }
 
+# Unpack onto dest. Drop this session's mapping first: a loaded dylib/dll/so
+# cannot be overwritten in place (Windows refuses delete; Unix returns
+# "Text file busy"). If another process still holds the file, rename it aside
+# and write the new bytes at the original path.
+.stage_runtime <- function(from, dest) {
+  .release_loaded_engine(dest)
+  .sweep_aside(dest)
+  .copy_tree(from, dest)
+  .sweep_aside(dest)
+  invisible(dest)
+}
+
+.release_loaded_engine <- function(dest) {
+  if (!isTRUE(engine_available())) {
+    return(invisible(FALSE))
+  }
+  loaded <- engine_path_loaded()
+  if (length(loaded) != 1L || is.na(loaded) || !nzchar(loaded)) {
+    return(invisible(FALSE))
+  }
+  if (!.path_is_under(loaded, dest)) {
+    return(invisible(FALSE))
+  }
+  engine_unload()
+  invisible(TRUE)
+}
+
+.path_is_under <- function(path, root) {
+  path <- .norm_slash(path)
+  root <- .norm_slash(root)
+  if (!nzchar(path) || !nzchar(root)) {
+    return(FALSE)
+  }
+  if (identical(path, root)) {
+    return(TRUE)
+  }
+  prefix <- if (endsWith(root, "/")) root else paste0(root, "/")
+  startsWith(path, prefix)
+}
+
+.norm_slash <- function(path) {
+  path <- path.expand(path)
+  tryCatch(
+    normalizePath(path, winslash = "/", mustWork = FALSE),
+    error = function(e) chartr("\\", "/", path)
+  )
+}
+
 .copy_tree <- function(from, to) {
   dir.create(to, recursive = TRUE, showWarnings = FALSE)
-  kids <- list.files(from, all.files = TRUE, no.. = TRUE, full.names = TRUE)
-  for (k in kids) {
-    dest_k <- file.path(to, basename(k))
-    if (dir.exists(k)) {
-      unlink(dest_k, recursive = TRUE, force = TRUE)
+  src_names <- list.files(from, all.files = TRUE, no.. = TRUE)
+  dest_names <- list.files(to, all.files = TRUE, no.. = TRUE)
+  stale <- setdiff(dest_names, src_names)
+  stale <- stale[!grepl("\\.old-[0-9]", stale)]
+  for (name in stale) {
+    .displace_path(file.path(to, name))
+  }
+  for (name in src_names) {
+    src <- file.path(from, name)
+    dest_k <- file.path(to, name)
+    if (dir.exists(src)) {
+      if (file.exists(dest_k) && !dir.exists(dest_k)) {
+        .displace_path(dest_k)
+      }
       dir.create(dest_k, recursive = TRUE, showWarnings = FALSE)
-      .copy_tree(k, dest_k)
+      .copy_tree(src, dest_k)
     } else {
-      file.copy(k, dest_k, overwrite = TRUE)
+      .replace_file(src, dest_k)
     }
   }
   invisible(to)
+}
+
+.replace_file <- function(from, to) {
+  if (dir.exists(to)) {
+    .displace_path(to)
+  } else if (file.exists(to)) {
+    .displace_path(to)
+  }
+  ok <- file.copy(from, to, overwrite = FALSE)
+  if (!isTRUE(ok) || !file.exists(to)) {
+    stop("Failed to copy ", from, " to ", to, call. = FALSE)
+  }
+  invisible(to)
+}
+
+.unlink_path <- function(path, recursive) {
+  unlink(path, recursive = recursive, force = TRUE)
+}
+
+# Delete path. A loaded library often rejects that; renaming it aside works
+# on Windows (MoveFile of a mapped DLL) and on Unix if unlink did not.
+.displace_path <- function(path) {
+  if (!file.exists(path) && !dir.exists(path)) {
+    return(invisible(TRUE))
+  }
+  is_dir <- dir.exists(path)
+  for (attempt in seq_len(5L)) {
+    status <- .unlink_path(path, recursive = is_dir)
+    if (identical(status, 0L) && !file.exists(path) && !dir.exists(path)) {
+      return(invisible(TRUE))
+    }
+    aside <- .aside_name(path)
+    if (isTRUE(file.rename(path, aside))) {
+      return(invisible(TRUE))
+    }
+    Sys.sleep(0.05)
+  }
+  stop(
+    "Could not replace ", path,
+    ". Another program still has it open. Quit R, MATLAB, and Python ",
+    "sessions that have loaded the engine, then run install_engine() again.",
+    call. = FALSE
+  )
+}
+
+.aside_name <- function(path) {
+  stamp <- format(Sys.time(), "%Y%m%d%H%M%OS3")
+  stamp <- gsub("[^0-9A-Za-z]", "", stamp)
+  base <- paste0(path, ".old-", Sys.getpid(), "-", stamp)
+  candidate <- base
+  n <- 0L
+  while (file.exists(candidate) || dir.exists(candidate)) {
+    n <- n + 1L
+    candidate <- paste0(base, "-", n)
+  }
+  candidate
+}
+
+.sweep_aside <- function(root) {
+  if (!dir.exists(root)) {
+    return(invisible(FALSE))
+  }
+  hits <- list.files(
+    root,
+    pattern = "\\.old-[0-9]",
+    all.files = TRUE,
+    recursive = TRUE,
+    full.names = TRUE
+  )
+  hits <- hits[order(nchar(hits), decreasing = TRUE)]
+  for (hit in hits) {
+    unlink(hit, recursive = TRUE, force = TRUE)
+  }
+  invisible(TRUE)
 }
 
 .download_to_temp <- function(url, quiet = FALSE) {

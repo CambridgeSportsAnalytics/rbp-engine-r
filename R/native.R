@@ -16,8 +16,9 @@
 #'
 #' @return [engine_available()] returns a logical. [engine_candidate_paths()]
 #'   returns character paths that may be probed. [find_engine_path()] and
-#'   [engine_load()] return the loaded path (invisibly). [ensure_engine()]
-#'   returns `TRUE` invisibly when the engine is available.
+#'   [engine_load()] return the loaded path (invisibly). [engine_unload()]
+#'   returns `TRUE` invisibly after releasing the loaded library.
+#'   [ensure_engine()] returns `TRUE` invisibly when the engine is available.
 #'
 #' @seealso [library_path()], [abi_version()], [install_engine()]
 #' @name engine
@@ -135,6 +136,17 @@ engine_load <- function(path = NULL) {
   }
   loaded <- .Call(C_rbpengine_engine_load, path)
   invisible(loaded)
+}
+
+#' Release a loaded engine shared library.
+#'
+#' [install_engine()] calls this before replacing a runtime that this session
+#' already has mapped, so the file is not locked for the copy.
+#'
+#' @return Invisibly `TRUE`.
+#' @export
+engine_unload <- function() {
+  invisible(.Call(C_rbpengine_engine_unload))
 }
 
 #' @rdname engine

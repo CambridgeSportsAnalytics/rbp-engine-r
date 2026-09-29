@@ -50,6 +50,10 @@ invoked from examples, tests, or vignettes (CRAN policy). Analogous to
 \code{install_engine(version = "1.3.6")} to pin an rbp-math-lib tarball
 (not the PyPI \code{rbp-engine} 2.x version), or
 \code{install_engine(path = "macos-arm64.tar.gz")} for a local archive.
+Calling it again upgrades in place. A library this session already loaded
+from \code{dest} is unloaded first. A file another process still has mapped is
+renamed aside and the new file is written under the original name, because
+a loaded shared library cannot be overwritten in place.
 }
 \seealso{
 \code{\link[=ensure_engine]{ensure_engine()}}, \code{\link[=engine_available]{engine_available()}}, \code{\link[=uninstall_engine]{uninstall_engine()}}

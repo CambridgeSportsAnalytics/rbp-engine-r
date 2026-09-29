@@ -32,5 +32,5 @@ package_version_rbpengine()
 engine_path_loaded()
 }
 \seealso{
-\code{\link[=engine_available]{engine_available()}}, \code{\link[=ensure_engine]{ensure_engine()}}, \code{\link[=license_source]{license_source()}}
+\code{\link[=engine_available]{engine_available()}}, \code{\link[=ensure_engine]{ensure_engine()}}, \code{\link[=license_source]{license_source()}}, \code{\link[=math_lib_version]{math_lib_version()}}
 }

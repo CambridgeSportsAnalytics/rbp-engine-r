@@ -72,7 +72,7 @@ library_path <- function() {
 #'
 #' @param path Optional full path to a shared library. When `NULL`, the library
 #'   on this system is located as described above.
-#' @return The semver string (for example `"1.3.5"`), invisibly.
+#' @return The semver string (for example `"1.3.6"`), invisibly.
 #' @seealso [engine_candidate_paths()], [abi_version()], [package_version_rbpengine()]
 #' @export
 math_lib_version <- function(path = NULL) {

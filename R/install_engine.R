@@ -10,12 +10,12 @@
 #' invoked from examples, tests, or vignettes (CRAN policy). Analogous to
 #' `pip install rbp-engine` for the engine files only. Typical calls are
 #' `install_engine()` for the latest math runtime for this machine,
-#' `install_engine(version = "1.3.5")` to pin an rbp-math-lib tarball
+#' `install_engine(version = "1.3.6")` to pin an rbp-math-lib tarball
 #' (not the PyPI `rbp-engine` 2.x version), or
 #' `install_engine(path = "macos-arm64.tar.gz")` for a local archive.
 #'
 #' @param version Math runtime to fetch (`docs.csanalytics.io/releases`).
-#'   `"latest"` (default) or a math-lib semver such as `"1.3.5"`.
+#'   `"latest"` (default) or a math-lib semver such as `"1.3.6"`.
 #'   Ignored when `path` or `url` is set.
 #' @param dest Install prefix. Default is [default_engine_home()]
 #'   (`~/.local/share/rbp-engine` on Unix, `%LOCALAPPDATA%/rbp-engine` on

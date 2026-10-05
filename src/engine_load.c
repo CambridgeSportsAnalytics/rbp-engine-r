@@ -145,6 +145,9 @@ int rbp_engine_load(const char *path, char *err_buf, int err_len) {
     _s = sym(h, "rbp_grid_options_set_attribute_combi", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_grid_options_set_attribute_combi) = _s;
+    _s = sym(h, "rbp_grid_options_set_attribute_groups", err_buf, err_len);
+    if (!_s) { rbp_engine_unload(); return -1; }
+    *(void **)(&g_rbp_api.p_rbp_grid_options_set_attribute_groups) = _s;
     _s = sym(h, "rbp_grid_options_set_censor_operator", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_grid_options_set_censor_operator) = _s;
@@ -172,6 +175,9 @@ int rbp_engine_load(const char *path, char *err_buf, int err_len) {
     _s = sym(h, "rbp_grid_options_set_prediction_scale", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_grid_options_set_prediction_scale) = _s;
+    _s = sym(h, "rbp_grid_options_set_required_attributes", err_buf, err_len);
+    if (!_s) { rbp_engine_unload(); return -1; }
+    *(void **)(&g_rbp_api.p_rbp_grid_options_set_required_attributes) = _s;
     _s = sym(h, "rbp_grid_options_set_retain_all", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_grid_options_set_retain_all) = _s;

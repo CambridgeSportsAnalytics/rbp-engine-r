@@ -427,7 +427,18 @@ static RbpGridOptions *make_grid_options(SEXP list) {
         return opts;
     }
     check_st(rbp_grid_options_set_max_iter(opts, list_get_size(list, "max_iter", 1000)));
-    check_st(rbp_grid_options_set_k(opts, list_get_size(list, "k", 1)));
+    {
+        size_t min_k = list_get_size(list, "k", 1);
+        if (list_has(list, "min_k")) {
+            size_t preferred = list_get_size(list, "min_k", 1);
+            if (list_has(list, "k") && list_get_size(list, "k", 1) != 1 &&
+                list_get_size(list, "k", 1) != preferred) {
+                error("pass min_k or k, not both with different values");
+            }
+            min_k = preferred;
+        }
+        check_st(rbp_grid_options_set_k(opts, min_k));
+    }
     check_st(rbp_grid_options_set_seed(opts, list_get_u32(list, "seed", 42)));
 
     if (list_has(list, "retain_grid_objects")) {
@@ -448,6 +459,31 @@ static RbpGridOptions *make_grid_options(SEXP list) {
         int nc = ncols(combi);
         check_st(rbp_grid_options_set_attribute_combi(
             opts, REAL(combi), (size_t)nr, (size_t)nc, LAYOUT_COL));
+        UNPROTECT(1);
+    }
+
+    if (list_has(list, "required_attributes")) {
+        SEXP required = list_get(list, "required_attributes");
+        required = PROTECT(coerceVector(required, REALSXP));
+        if (length(required) <= 0) {
+            UNPROTECT(1);
+            error("required_attributes must be non-empty");
+        }
+        check_st(rbp_grid_options_set_required_attributes(
+            opts, REAL(required), (size_t)length(required)));
+        UNPROTECT(1);
+    }
+
+    if (list_has(list, "attribute_groups")) {
+        SEXP groups = list_get(list, "attribute_groups");
+        if (!isMatrix(groups)) {
+            error("attribute_groups must be a matrix");
+        }
+        groups = PROTECT(coerceVector(groups, REALSXP));
+        int nr = nrows(groups);
+        int nc = ncols(groups);
+        check_st(rbp_grid_options_set_attribute_groups(
+            opts, REAL(groups), (size_t)nr, (size_t)nc, LAYOUT_COL));
         UNPROTECT(1);
     }
 

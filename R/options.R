@@ -105,11 +105,21 @@ MaxFitOptions <- function(
 #' @param include_linear_regression Logical; fills `yhat_linear` when available.
 #' @param verbose Logical; engine diagnostics (default `FALSE`).
 #' @param max_iter Combination search budget.
-#' @param k Combination size.
+#' @param min_k Minimum number of attributes turned on in a combination.
+#'   Combinations may be larger, up to all attributes, until `max_iter` is
+#'   filled. Default `1`.
+#' @param k Alias of `min_k`. Still accepted. If both are set to different
+#'   values, this is an error unless `k` was left at its default.
 #' @param seed RNG seed.
 #' @param retain_all Retain all grid cell objects.
 #' @param retain_grid_objects Character policy string (overrides `retain_all`).
-#' @param attribute_combi Optional matrix of attribute combinations.
+#' @param attribute_combi Optional matrix of attribute combinations. Cannot
+#'   be combined with `required_attributes` or `attribute_groups`.
+#' @param required_attributes Length-K 0/1 mask of attributes that are on in
+#'   every generated combination. Column order matches `X`.
+#' @param attribute_groups G by K 0/1 mask. Each row is a group of attributes
+#'   selected together. Rows must be disjoint. A row with a single 1 is
+#'   ignored. A required attribute inside a group forces the whole group.
 #' @param adjust_impact_for_missing Logical; incomplete-column IOF/IOP vs a
 #'   μ+σZ include-k null (default `TRUE`). `FALSE` is the pre-adjustment /
 #'   PSR-parity baseline.
@@ -118,7 +128,7 @@ MaxFitOptions <- function(
 #' @seealso [PredictOptions], [predict_grid]
 #'
 #' @examples
-#' GridOptions(k = 2L, max_iter = 100L)
+#' GridOptions(min_k = 2L, max_iter = 100L)
 #'
 #' @export
 GridOptions <- function(
@@ -132,11 +142,14 @@ GridOptions <- function(
     include_linear_regression = FALSE,
     verbose = FALSE,
     max_iter = 1000L,
+    min_k = NULL,
     k = 1L,
     seed = 42L,
     retain_all = FALSE,
     retain_grid_objects = NULL,
     attribute_combi = NULL,
+    required_attributes = NULL,
+    attribute_groups = NULL,
     adjust_impact_for_missing = TRUE,
     inner_parallel = "auto"
 ) {
@@ -151,6 +164,12 @@ GridOptions <- function(
     include_linear_regression = include_linear_regression,
     verbose = verbose
   )
+  if (!is.null(min_k)) {
+    if (!missing(k) && as.integer(k) != as.integer(min_k)) {
+      stop("pass min_k or k, not both with different values", call. = FALSE)
+    }
+    k <- min_k
+  }
   base$verify_missing_data <- NULL
   base$max_iter <- as.integer(max_iter)
   base$k <- as.integer(k)
@@ -158,6 +177,8 @@ GridOptions <- function(
   base$retain_all <- isTRUE(retain_all)
   base$retain_grid_objects <- retain_grid_objects
   base$attribute_combi <- attribute_combi
+  base$required_attributes <- required_attributes
+  base$attribute_groups <- attribute_groups
   base$adjust_impact_for_missing <- isTRUE(adjust_impact_for_missing)
   base$`_inner_parallel` <- inner_parallel
   class(base) <- c("GridOptions", "list")

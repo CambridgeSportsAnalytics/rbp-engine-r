@@ -15,11 +15,14 @@ GridOptions(
   include_linear_regression = FALSE,
   verbose = FALSE,
   max_iter = 1000L,
+  min_k = NULL,
   k = 1L,
   seed = 42L,
   retain_all = FALSE,
   retain_grid_objects = NULL,
   attribute_combi = NULL,
+  required_attributes = NULL,
+  attribute_groups = NULL,
   adjust_impact_for_missing = TRUE,
   inner_parallel = "auto"
 )
@@ -45,7 +48,11 @@ GridOptions(
 
 \item{max_iter}{Combination search budget.}
 
-\item{k}{Combination size.}
+\item{min_k}{Minimum number of attributes turned on in a combination.
+Combinations may be larger, up to all attributes, until \code{max_iter} is
+filled. Default \code{1}.}
+
+\item{k}{Alias of \code{min_k}. Still accepted.}
 
 \item{seed}{RNG seed.}
 
@@ -53,7 +60,14 @@ GridOptions(
 
 \item{retain_grid_objects}{Character policy string (overrides \code{retain_all}).}
 
-\item{attribute_combi}{Optional matrix of attribute combinations.}
+\item{attribute_combi}{Optional matrix of attribute combinations. Cannot
+be combined with \code{required_attributes} or \code{attribute_groups}.}
+
+\item{required_attributes}{Length-K 0/1 mask of attributes that are on in
+every generated combination.}
+
+\item{attribute_groups}{G by K 0/1 mask. Each row is a group of attributes
+selected together.}
 
 \item{adjust_impact_for_missing}{Logical; incomplete-column IOF/IOP vs a
 μ+σZ include-k null (default \code{TRUE}). \code{FALSE} is the pre-adjustment /
@@ -70,7 +84,7 @@ search settings. Does \strong{not} take \code{verify_missing_data} / \code{missi
 Grid chooses complete vs pairwise moments per combination.
 }
 \examples{
-GridOptions(k = 2L, max_iter = 100L)
+GridOptions(min_k = 2L, max_iter = 100L)
 
 }
 \seealso{

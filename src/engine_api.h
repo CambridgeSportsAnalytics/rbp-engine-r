@@ -19,6 +19,7 @@ typedef struct RbpEngineApi {
     RbpStatus (*p_rbp_grid_options_set_adj_fit_multiplier)(RbpGridOptions *opts, int32_t value);
     RbpStatus (*p_rbp_grid_options_set_adjust_impact_for_missing)(RbpGridOptions *opts, int32_t value);
     RbpStatus (*p_rbp_grid_options_set_attribute_combi)(RbpGridOptions *opts, const double *data, size_t n_rows, size_t n_cols, int32_t layout);
+    RbpStatus (*p_rbp_grid_options_set_attribute_groups)(RbpGridOptions *opts, const double *data, size_t n_rows, size_t n_cols, int32_t layout);
     RbpStatus (*p_rbp_grid_options_set_censor_operator)(RbpGridOptions *opts, int32_t value);
     RbpStatus (*p_rbp_grid_options_set_censor_type)(RbpGridOptions *opts, int32_t value);
     RbpStatus (*p_rbp_grid_options_set_censor_unit)(RbpGridOptions *opts, int32_t value);
@@ -28,6 +29,7 @@ typedef struct RbpEngineApi {
     RbpStatus (*p_rbp_grid_options_set_k)(RbpGridOptions *opts, size_t value);
     RbpStatus (*p_rbp_grid_options_set_max_iter)(RbpGridOptions *opts, size_t value);
     RbpStatus (*p_rbp_grid_options_set_prediction_scale)(RbpGridOptions *opts, int32_t value);
+    RbpStatus (*p_rbp_grid_options_set_required_attributes)(RbpGridOptions *opts, const double *data, size_t len);
     RbpStatus (*p_rbp_grid_options_set_retain_all)(RbpGridOptions *opts, int32_t value);
     RbpStatus (*p_rbp_grid_options_set_retain_grid_objects_str)(RbpGridOptions *opts, const char *value);
     RbpStatus (*p_rbp_grid_options_set_seed)(RbpGridOptions *opts, uint32_t value);
@@ -177,6 +179,7 @@ void rbp_engine_unload(void);
 #define rbp_grid_options_set_adj_fit_multiplier (g_rbp_api.p_rbp_grid_options_set_adj_fit_multiplier)
 #define rbp_grid_options_set_adjust_impact_for_missing (g_rbp_api.p_rbp_grid_options_set_adjust_impact_for_missing)
 #define rbp_grid_options_set_attribute_combi (g_rbp_api.p_rbp_grid_options_set_attribute_combi)
+#define rbp_grid_options_set_attribute_groups (g_rbp_api.p_rbp_grid_options_set_attribute_groups)
 #define rbp_grid_options_set_censor_operator (g_rbp_api.p_rbp_grid_options_set_censor_operator)
 #define rbp_grid_options_set_censor_type (g_rbp_api.p_rbp_grid_options_set_censor_type)
 #define rbp_grid_options_set_censor_unit (g_rbp_api.p_rbp_grid_options_set_censor_unit)
@@ -186,6 +189,7 @@ void rbp_engine_unload(void);
 #define rbp_grid_options_set_k (g_rbp_api.p_rbp_grid_options_set_k)
 #define rbp_grid_options_set_max_iter (g_rbp_api.p_rbp_grid_options_set_max_iter)
 #define rbp_grid_options_set_prediction_scale (g_rbp_api.p_rbp_grid_options_set_prediction_scale)
+#define rbp_grid_options_set_required_attributes (g_rbp_api.p_rbp_grid_options_set_required_attributes)
 #define rbp_grid_options_set_retain_all (g_rbp_api.p_rbp_grid_options_set_retain_all)
 #define rbp_grid_options_set_retain_grid_objects_str (g_rbp_api.p_rbp_grid_options_set_retain_grid_objects_str)
 #define rbp_grid_options_set_seed (g_rbp_api.p_rbp_grid_options_set_seed)

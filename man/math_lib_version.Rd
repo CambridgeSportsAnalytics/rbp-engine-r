@@ -11,7 +11,7 @@ math_lib_version(path = NULL)
 on this system is located as described above.}
 }
 \value{
-The semver string (for example \code{"1.3.6"}), invisibly.
+The semver string (for example \code{"1.3.7"}), invisibly.
 }
 \description{
 Reads the \code{RBP-ENGINE-VERSION=} record compiled into the engine dll, dylib,

@@ -106,8 +106,14 @@ MaxFitOptions <- function(
 #' @param verbose Logical; engine diagnostics (default `FALSE`).
 #' @param max_iter Combination search budget.
 #' @param min_k Minimum number of attributes turned on in a combination.
-#'   Combinations may be larger, up to all attributes, until `max_iter` is
-#'   filled. Default `1`.
+#'   Combinations may be larger, up to `max_k` or all attributes, until
+#'   `max_iter` is filled. Default `1`.
+#' @param max_k Maximum number of attributes turned on in a combination.
+#'   Omit it to allow every attribute. Set it equal to `min_k` for that
+#'   exact size.
+#' @param allowed_k Integer vector of exact combination sizes, such as
+#'   `c(1L, 3L, 7L, 10L)`. Sizes that are not listed are not legal. Replaces
+#'   `min_k` and `max_k`. A contiguous vector matches that band.
 #' @param k Alias of `min_k`. Still accepted. If both are set to different
 #'   values, this is an error unless `k` was left at its default.
 #' @param seed RNG seed.
@@ -143,6 +149,8 @@ GridOptions <- function(
     verbose = FALSE,
     max_iter = 1000L,
     min_k = NULL,
+    max_k = NULL,
+    allowed_k = NULL,
     k = 1L,
     seed = 42L,
     retain_all = FALSE,
@@ -164,6 +172,14 @@ GridOptions <- function(
     include_linear_regression = include_linear_regression,
     verbose = verbose
   )
+  if (!is.null(allowed_k)) {
+    if (!is.null(min_k) || !missing(k) || !is.null(max_k)) {
+      stop(
+        "allowed_k replaces min_k and max_k. Pass allowed_k, or pass min_k and max_k, not both.",
+        call. = FALSE
+      )
+    }
+  }
   if (!is.null(min_k)) {
     if (!missing(k) && as.integer(k) != as.integer(min_k)) {
       stop("pass min_k or k, not both with different values", call. = FALSE)
@@ -173,6 +189,8 @@ GridOptions <- function(
   base$verify_missing_data <- NULL
   base$max_iter <- as.integer(max_iter)
   base$k <- as.integer(k)
+  base$max_k <- if (is.null(max_k)) NULL else as.integer(max_k)
+  base$allowed_k <- if (is.null(allowed_k)) NULL else as.integer(allowed_k)
   base$seed <- as.integer(seed)
   base$retain_all <- isTRUE(retain_all)
   base$retain_grid_objects <- retain_grid_objects

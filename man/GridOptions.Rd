@@ -16,6 +16,8 @@ GridOptions(
   verbose = FALSE,
   max_iter = 1000L,
   min_k = NULL,
+  max_k = NULL,
+  allowed_k = NULL,
   k = 1L,
   seed = 42L,
   retain_all = FALSE,
@@ -49,8 +51,14 @@ GridOptions(
 \item{max_iter}{Combination search budget.}
 
 \item{min_k}{Minimum number of attributes turned on in a combination.
-Combinations may be larger, up to all attributes, until \code{max_iter} is
-filled. Default \code{1}.}
+Combinations may be larger, up to \code{max_k} or all attributes, until
+\code{max_iter} is filled. Default \code{1}.}
+
+\item{max_k}{Maximum number of attributes turned on. Omit it to allow every
+attribute. Set it equal to \code{min_k} for that exact size.}
+
+\item{allowed_k}{Integer vector of exact combination sizes, such as
+\code{c(1L, 3L, 7L, 10L)}. Replaces \code{min_k} and \code{max_k}.}
 
 \item{k}{Alias of \code{min_k}. Still accepted.}
 

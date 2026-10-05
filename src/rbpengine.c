@@ -426,6 +426,12 @@ static RbpGridOptions *make_grid_options(SEXP list) {
     if (list == R_NilValue) {
         return opts;
     }
+    if (list_has(list, "allowed_k") &&
+        (list_has(list, "min_k") || list_has(list, "max_k") ||
+         (list_has(list, "k") && list_get_size(list, "k", 1) != 1))) {
+        rbp_grid_options_free(opts);
+        error("allowed_k replaces min_k and max_k. Pass allowed_k, or pass min_k and max_k, not both.");
+    }
     check_st(rbp_grid_options_set_max_iter(opts, list_get_size(list, "max_iter", 1000)));
     {
         size_t min_k = list_get_size(list, "k", 1);
@@ -438,6 +444,31 @@ static RbpGridOptions *make_grid_options(SEXP list) {
             min_k = preferred;
         }
         check_st(rbp_grid_options_set_k(opts, min_k));
+    }
+    if (list_has(list, "max_k")) {
+        check_st(rbp_grid_options_set_max_k(opts, list_get_size(list, "max_k", 1)));
+    }
+    if (list_has(list, "allowed_k")) {
+        SEXP sizes = list_get(list, "allowed_k");
+        sizes = PROTECT(coerceVector(sizes, REALSXP));
+        R_xlen_t n = XLENGTH(sizes);
+        if (n <= 0) {
+            UNPROTECT(1);
+            rbp_grid_options_free(opts);
+            error("allowed_k must list at least one combination size.");
+        }
+        size_t *buf = (size_t *)R_alloc((size_t)n, sizeof(size_t));
+        for (R_xlen_t i = 0; i < n; i++) {
+            double value = REAL(sizes)[i];
+            if (!(value >= 1.0) || value != (double)(size_t)value) {
+                UNPROTECT(1);
+                rbp_grid_options_free(opts);
+                error("allowed_k must be at least 1. An empty combination has no attributes to score.");
+            }
+            buf[i] = (size_t)value;
+        }
+        UNPROTECT(1);
+        check_st(rbp_grid_options_set_allowed_k(opts, buf, (size_t)n));
     }
     check_st(rbp_grid_options_set_seed(opts, list_get_u32(list, "seed", 42)));
 

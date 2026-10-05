@@ -7,13 +7,13 @@ installed runtime and a CSA license.
 
 **Python users:** this is not the Python package. Use
 `pip install rbp-engine` ([PyPI](https://pypi.org/project/rbp-engine/))
-(interface **2.3.0**; math crate is rbp-math-lib **1.3.7**).
+(interface **2.4.0**; math crate is rbp-math-lib **1.3.8**).
 
 The R **package** name is `rbpengine` (CRAN forbids hyphens). This GitHub repo
 is `rbp-engine-r` so it sits next to `rbp-engine` / `rbp-math-c-abi` and is not
-mistaken for the engine itself. This package is version **2.3.0**, the same
-interface generation as PyPI `rbp-engine` **2.3.0**. `install_engine()` still
-downloads a math runtime (currently **1.3.7**).
+mistaken for the engine itself. This package is version **2.4.0**, the same
+interface generation as PyPI `rbp-engine` **2.4.0**. `install_engine()` still
+downloads a math runtime (currently **1.3.8**).
 
 ## Install
 

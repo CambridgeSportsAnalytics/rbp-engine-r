@@ -5,7 +5,7 @@
 | Published from | Private `rbp-engine` tree (`r/`) |
 | Public repo | [CambridgeSportsAnalytics/rbp-engine-r](https://github.com/CambridgeSportsAnalytics/rbp-engine-r) |
 | R package name | `rbpengine` |
-| Package version | 2.3.0 |
-| Private commit | `9ac21d2bd16ac10a9a654eba5931d3a2a59bf565` |
-| Synced at (UTC) | 2026-10-05T16:02Z |
-| RBP_ABI_VERSION (vendored header) | 5 |
+| Package version | 2.4.0 |
+| Private commit | `26a0d3be44accbec73c7d51f0364752d2474da29` |
+| Synced at (UTC) | 2026-10-05T17:20Z |
+| RBP_ABI_VERSION (vendored header) | 6 |

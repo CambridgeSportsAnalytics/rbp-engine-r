@@ -97,8 +97,8 @@ typedef struct RbpEngineApi {
     RbpStatus (*p_rbp_results_copy_k_cells)(const RbpPredictionResults *results, double *out, size_t len, int32_t layout);
     RbpStatus (*p_rbp_results_copy_k_fit)(const RbpPredictionResults *results, double *out, size_t len);
     RbpStatus (*p_rbp_results_copy_maxfit_index)(const RbpPredictionResults *results, double *out, size_t len);
-    RbpStatus (*p_rbp_results_copy_mctc)(const RbpPredictionResults *results, double *out, size_t len);
     RbpStatus (*p_rbp_results_copy_mctp)(const RbpPredictionResults *results, double *out, size_t len);
+    RbpStatus (*p_rbp_results_copy_mctr)(const RbpPredictionResults *results, double *out, size_t len);
     RbpStatus (*p_rbp_results_copy_n_cells)(const RbpPredictionResults *results, int32_t censor, double *out, size_t len, int32_t layout);
     RbpStatus (*p_rbp_results_copy_outlier_influence)(const RbpPredictionResults *results, double *out, size_t len);
     RbpStatus (*p_rbp_results_copy_relevance)(const RbpPredictionResults *results, double *out, size_t len);
@@ -259,8 +259,8 @@ void rbp_engine_unload(void);
 #define rbp_results_copy_k_cells (g_rbp_api.p_rbp_results_copy_k_cells)
 #define rbp_results_copy_k_fit (g_rbp_api.p_rbp_results_copy_k_fit)
 #define rbp_results_copy_maxfit_index (g_rbp_api.p_rbp_results_copy_maxfit_index)
-#define rbp_results_copy_mctc (g_rbp_api.p_rbp_results_copy_mctc)
 #define rbp_results_copy_mctp (g_rbp_api.p_rbp_results_copy_mctp)
+#define rbp_results_copy_mctr (g_rbp_api.p_rbp_results_copy_mctr)
 #define rbp_results_copy_n_cells (g_rbp_api.p_rbp_results_copy_n_cells)
 #define rbp_results_copy_outlier_influence (g_rbp_api.p_rbp_results_copy_outlier_influence)
 #define rbp_results_copy_relevance (g_rbp_api.p_rbp_results_copy_relevance)

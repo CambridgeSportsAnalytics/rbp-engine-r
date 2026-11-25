@@ -818,15 +818,15 @@ static SEXP harvest_results(RbpPredictionResults *h) {
 
     if (rbp_results_has_grid_insights(h)) {
         SEXP vw = try_copy1(h, rbp_results_copy_variable_weights, k, &nprot);
-        SEXP mctc = try_copy1(h, rbp_results_copy_mctc, k, &nprot);
+        SEXP mctr = try_copy1(h, rbp_results_copy_mctr, k, &nprot);
         SEXP mctp = try_copy1(h, rbp_results_copy_mctp, k, &nprot);
         SEXP cctp = try_copy1(h, rbp_results_copy_cctp, k, &nprot);
         SEXP xic = try_copy1(h, rbp_results_copy_xi_solo_composite, n, &nprot);
-        if (vw != R_NilValue && mctc != R_NilValue && mctp != R_NilValue &&
+        if (vw != R_NilValue && mctr != R_NilValue && mctp != R_NilValue &&
             cctp != R_NilValue) {
             const char *gin[] = {
                 "variable_weights",
-                "marginal_contribution_to_conviction",
+                "marginal_contribution_to_reliability",
                 "marginal_contribution_to_prediction",
                 "component_contribution_to_prediction",
                 "xi_solo_composite",
@@ -835,11 +835,11 @@ static SEXP harvest_results(RbpPredictionResults *h) {
             };
             SEXP grid_insights = keep(mk_named_list(7, gin), &nprot);
             set_list_el(grid_insights, 0, vw);
-            set_list_el(grid_insights, 1, mctc);
+            set_list_el(grid_insights, 1, mctr);
             set_list_el(grid_insights, 2, mctp);
             set_list_el(grid_insights, 3, cctp);
             set_list_el(grid_insights, 4, xic);
-            set_list_el(grid_insights, 5, mctc);
+            set_list_el(grid_insights, 5, mctr);
             set_list_el(grid_insights, 6, mctp);
             classgets(grid_insights, keep(mkString("GridInsights"), &nprot));
             set_list_el(out, 16, grid_insights);

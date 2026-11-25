@@ -379,12 +379,12 @@ int rbp_engine_load(const char *path, char *err_buf, int err_len) {
     _s = sym(h, "rbp_results_copy_maxfit_index", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_results_copy_maxfit_index) = _s;
-    _s = sym(h, "rbp_results_copy_mctc", err_buf, err_len);
-    if (!_s) { rbp_engine_unload(); return -1; }
-    *(void **)(&g_rbp_api.p_rbp_results_copy_mctc) = _s;
     _s = sym(h, "rbp_results_copy_mctp", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_results_copy_mctp) = _s;
+    _s = sym(h, "rbp_results_copy_mctr", err_buf, err_len);
+    if (!_s) { rbp_engine_unload(); return -1; }
+    *(void **)(&g_rbp_api.p_rbp_results_copy_mctr) = _s;
     _s = sym(h, "rbp_results_copy_n_cells", err_buf, err_len);
     if (!_s) { rbp_engine_unload(); return -1; }
     *(void **)(&g_rbp_api.p_rbp_results_copy_n_cells) = _s;

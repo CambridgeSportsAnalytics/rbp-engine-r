@@ -6,6 +6,6 @@
 | Public repo | [CambridgeSportsAnalytics/rbp-engine-r](https://github.com/CambridgeSportsAnalytics/rbp-engine-r) |
 | R package name | `rbpengine` |
 | Package version | 2.4.0 |
-| Private commit | `bae3eaf2a8b7322aaae8574558d08a9cc2fbfff5` |
-| Synced at (UTC) | 2026-10-05T21:47Z |
-| RBP_ABI_VERSION (vendored header) | 7 |
+| Private commit | `767730de6c9c83581a0e5b7e78052573ebe09715` |
+| Synced at (UTC) | 2026-11-25T18:35Z |
+| RBP_ABI_VERSION (vendored header) | 8 |
